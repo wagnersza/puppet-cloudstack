@@ -1,6 +1,12 @@
 class cloudstack {
-  case $operatingsystem {
-    CentOS       : { include cloudstack::centos }
-    default      : { fail "Unsupported operatingsystem ${operatingsystem}" }
-  }
+  
+  include cloudstack::selinux
+    
+  service { "add_services":
+    ensure    => running,
+    name      => $::cloudstack::params::services,
+    enable    => true,
+  }   
+  
+
 }
